@@ -6,8 +6,6 @@ import { conversationsRouter } from './routes/conversations.js';
 import { contactsRouter } from './routes/contacts.js';
 import { callsRouter } from './routes/calls.js';
 import { paymentsRouter } from './routes/payments.js';
-import { sequencesRouter } from './routes/sequences.js';
-import { commissionsRouter } from './routes/commissions.js';
 import { analyticsRouter } from './routes/analytics.js';
 import { webhooksRouter } from './routes/webhooks.js';
 import { authMiddleware } from './middleware/auth.js';
@@ -35,8 +33,6 @@ app.use('/api/conversations', authMiddleware, conversationsRouter);
 app.use('/api/contacts', authMiddleware, contactsRouter);
 app.use('/api/calls', authMiddleware, callsRouter);
 app.use('/api/payments', authMiddleware, paymentsRouter);
-app.use('/api/sequences', authMiddleware, sequencesRouter);
-app.use('/api/commissions', authMiddleware, commissionsRouter);
 app.use('/api/analytics', authMiddleware, analyticsRouter);
 
 // ─── HEALTH CHECK ─────────────────────────────────────────────────────────────
