@@ -232,6 +232,77 @@ function AgentConfig({ lang }) {
 
 
 
+function SoulSection({ lang }) {
+  const es = lang === 'es';
+  const examples = es ? [
+    { name: 'Sofia', tone: 'Cálido', phrase: 'Hola 👋 Soy Sofia, el asistente de Miami Seguros. ¿En qué puedo ayudarte hoy?' },
+    { name: 'Carlos', tone: 'Profesional', phrase: 'Buenos días. Soy Carlos, asistente de Seguro Plus. ¿Cómo le puedo ayudar?' },
+    { name: 'Ana', tone: 'Amigable', phrase: '¡Hola! 😊 Soy Ana de Florida Health. Estoy aquí para lo que necesites.' },
+  ] : [
+    { name: 'Sofia', tone: 'Warm', phrase: 'Hi 👋 I\'m Sofia, assistant at Miami Insurance. How can I help you today?' },
+    { name: 'Carlos', tone: 'Professional', phrase: 'Good morning. I\'m Carlos, assistant at Seguro Plus. How may I help you?' },
+    { name: 'Ana', tone: 'Friendly', phrase: 'Hey! 😊 I\'m Ana from Florida Health. I\'m here for whatever you need.' },
+  ];
+
+  return (
+    <section className="bg-slate-950 py-24 px-6 border-t border-white/10">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left — copy */}
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-rose-500/10 border border-rose-500/30 px-4 py-2 text-sm text-rose-300 mb-6">
+              <Zap className="h-4 w-4" />
+              {es ? 'Tu agente, tu identidad' : 'Your agent, your identity'}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+              {es ? <>Dale vida<br /><span className="text-rose-400">a tu agente</span></> : <>Give life<br /><span className="text-rose-400">to your agent</span></>}
+            </h2>
+            <p className="mt-6 text-lg text-slate-300 leading-relaxed">
+              {es
+                ? 'No es un bot sin nombre. Tú decides cómo se llama, cómo habla, qué valores tiene. Tus clientes van a conocerlo — y van a confiar en él.'
+                : "It's not a nameless bot. You decide its name, how it talks, what values it has. Your clients will get to know it — and trust it."}
+            </p>
+            <div className="mt-8 space-y-3">
+              {[
+                es ? 'Nombre propio — Sofia, Carlos, Ana, el que tú elijas' : 'Custom name — Sofia, Carlos, Ana, whatever you choose',
+                es ? 'Tono de voz — cálido, profesional, formal, amigable' : 'Voice tone — warm, professional, formal, friendly',
+                es ? 'Valores — paciente, nunca presiona, siempre saluda por nombre' : 'Values — patient, never pushy, always greets by name',
+                es ? 'Frases propias — apertura y despedida personalizadas' : 'Custom phrases — personalized opening and closing',
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-rose-400 flex-shrink-0" />
+                  <span className="text-slate-300 text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — agent cards */}
+          <div className="space-y-4">
+            {examples.map((ex, i) => (
+              <div key={i} className={`rounded-2xl border border-white/10 p-5 ${i === 0 ? 'bg-white/8 border-rose-400/30' : 'bg-white/4'}`}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-slate-950 flex-shrink-0 ${i === 0 ? 'bg-rose-400' : i === 1 ? 'bg-yellow-400' : 'bg-emerald-400'}`}>
+                    {ex.name[0]}
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">{ex.name}</p>
+                    <p className="text-xs text-slate-500">{ex.tone}</p>
+                  </div>
+                  {i === 0 && <span className="ml-auto text-xs bg-rose-400/10 text-rose-400 px-2.5 py-1 rounded-full font-medium border border-rose-400/20">{es ? 'Activo' : 'Active'}</span>}
+                </div>
+                <div className={`rounded-xl px-4 py-3 text-sm text-slate-200 leading-relaxed ${i === 0 ? 'bg-slate-800' : 'bg-slate-900'}`}>
+                  {ex.phrase}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Features({ lang }) {
   const T = t[lang];
   const features = [
@@ -826,6 +897,7 @@ export default function Landing() {
       <Hero lang={lang} />
       <AgentHighlight lang={lang} />
       <AgentConfig lang={lang} />
+      <SoulSection lang={lang} />
       <Features lang={lang} />
       <DashboardPreview lang={lang} />
       <HowItWorks lang={lang} />
