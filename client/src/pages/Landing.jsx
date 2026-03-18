@@ -326,6 +326,7 @@ function Comparison({ lang }) {
   const rows = [
     { feature: lang === 'es' ? 'WhatsApp sin Meta/WABA' : 'WhatsApp without Meta/WABA', ag: true, oth: false },
     { feature: lang === 'es' ? 'Número dedicado incluido' : 'Dedicated number included', ag: true, oth: false },
+    { feature: lang === 'es' ? 'Email @opnag.com incluido' : '@opnag.com email included', ag: true, oth: false },
     { feature: lang === 'es' ? 'AI bilingüe contextual' : 'Bilingual contextual AI', ag: true, oth: false },
     { feature: lang === 'es' ? 'Coach AI de ventas' : 'AI sales coach', ag: true, oth: false },
     { feature: lang === 'es' ? 'Sin costo por mensaje' : 'No per-message cost', ag: true, oth: false },
@@ -361,9 +362,9 @@ function Comparison({ lang }) {
 function Pricing({ lang }) {
   const T = t[lang];
   const plans = [
-    { name: 'Starter', price: '$497', setup: `$1,500 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_starter_f1,T.price_starter_f2,T.price_starter_f3,T.price_starter_f4,T.price_starter_f5] },
-    { name: 'Growth', price: '$797', setup: `$2,000 ${T.price_setup}`, color: 'border-yellow-400/50', badge: T.price_popular, features: [T.price_growth_f1,T.price_growth_f2,T.price_growth_f3,T.price_growth_f4,T.price_growth_f5,T.price_growth_f6,T.price_growth_f7] },
-    { name: 'Pro', price: '$1,297', setup: `$3,000 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_pro_f1,T.price_pro_f2,T.price_pro_f3,T.price_pro_f4,T.price_pro_f5,T.price_pro_f6,T.price_pro_f7] },
+    { name: 'Starter', price: '$497', setup: `$1,500 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_starter_f1,T.price_starter_f2,T.price_starter_f3,T.price_starter_f4,T.price_starter_f4b,T.price_starter_f5] },
+    { name: 'Growth', price: '$797', setup: `$2,000 ${T.price_setup}`, color: 'border-yellow-400/50', badge: T.price_popular, features: [T.price_growth_f1,T.price_growth_f2,T.price_growth_f3,T.price_growth_f3b,T.price_growth_f4,T.price_growth_f5,T.price_growth_f6,T.price_growth_f7] },
+    { name: 'Pro', price: '$1,297', setup: `$3,000 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_pro_f1,T.price_pro_f2,T.price_pro_f3,T.price_pro_f3b,T.price_pro_f4,T.price_pro_f5,T.price_pro_f6,T.price_pro_f7] },
   ];
   return (
     <section id="pricing" className="bg-slate-950 py-24 px-6 border-t border-white/10">
