@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { authRouter } from './routes/auth.js';
+import { onboardingRouter } from './routes/onboarding.js';
 import { conversationsRouter } from './routes/conversations.js';
 import { contactsRouter } from './routes/contacts.js';
 import { callsRouter } from './routes/calls.js';
@@ -34,6 +35,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/webhooks', webhooksRouter); // Webhook de WhatsApp no requiere JWT
 
 // ─── RUTAS PROTEGIDAS ─────────────────────────────────────────────────────────
+app.use('/api/onboarding', authMiddleware, onboardingRouter);
 app.use('/api/conversations', authMiddleware, conversationsRouter);
 app.use('/api/contacts', authMiddleware, contactsRouter);
 app.use('/api/calls', authMiddleware, callsRouter);

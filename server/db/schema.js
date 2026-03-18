@@ -10,9 +10,11 @@ export const agencies = pgTable('agencies', {
   crmType:        varchar('crm_type', { length: 50 }).default('none'), // 'zoho' | 'hubspot' | 'none'
   crmApiKey:      varchar('crm_api_key', { length: 255 }),
   timezone:       varchar('timezone', { length: 50 }).default('America/New_York'),
-  plan:           varchar('plan', { length: 20 }).default('starter'), // 'starter' | 'growth' | 'pro'
-  status:         varchar('status', { length: 20 }).default('active'),
-  createdAt:      timestamp('created_at').defaultNow(),
+  plan:                varchar('plan', { length: 20 }).default('starter'), // 'starter' | 'growth' | 'pro'
+  status:              varchar('status', { length: 20 }).default('active'),
+  metadata:            jsonb('metadata'),
+  onboardingCompleted: boolean('onboarding_completed').default(false),
+  createdAt:           timestamp('created_at').defaultNow(),
 });
 
 // ─── USUARIOS ────────────────────────────────────────────────────────────────
