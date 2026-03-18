@@ -129,7 +129,7 @@ function AgentConfig({ lang }) {
     { from: 'user', msg: 'Las comisiones son: 1-5 ventas sin bono, 6-9 ventas $100 por venta, 10-14 ventas $150, 15 o más $200' },
     { from: 'ai',  msg: '✅ Entendido. He configurado 4 tiers de comisión. ¿Quieres que aplique retroactivo a este mes?' },
     { from: 'user', msg: 'Sí, y agrega que las cancelaciones en los primeros 30 días descuentan la comisión' },
-    { from: 'ai',  msg: '✅ Regla de cancelación agregada. Tus promotoras recibirán el reporte ajustado hoy a las 6pm.' },
+    { from: 'ai',  msg: '✅ Regla de cancelación agregada. Tus agentes recibirán el reporte ajustado hoy a las 6pm.' },
   ] : [
     { from: 'user', msg: 'Commissions are: 1-5 sales no bonus, 6-9 sales $100 per sale, 10-14 $150, 15+ $200' },
     { from: 'ai',  msg: '✅ Got it. I configured 4 commission tiers. Apply retroactively to this month?' },
