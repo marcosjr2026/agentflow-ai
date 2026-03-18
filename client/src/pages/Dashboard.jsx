@@ -53,7 +53,7 @@ export default function Dashboard() {
               Bilingual AI Operating System
             </div>
             <h1 className="mt-5 text-4xl font-semibold tracking-tight text-white">
-              Buenos días, {user.name?.split(' ')[0] || 'Marcos'}
+              Buenos días / Good morning, {user.name?.split(' ')[0] || 'Marcos'}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
               AgentFlow centraliza conversaciones, seguimiento, cobros y coaching de llamadas para que tu agencia opere con más velocidad, menos fuga y mejor conversión.

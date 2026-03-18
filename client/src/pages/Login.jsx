@@ -36,8 +36,8 @@ export default function Login() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 rounded-2xl mb-4">
             <Bot className="w-9 h-9 text-slate-900" />
           </div>
-          <h1 className="text-2xl font-bold text-white">AgentFlow AI</h1>
-          <p className="text-slate-400 mt-1">Sistema AI para Agencias de Seguros</p>
+          <h1 className="text-2xl font-bold text-white">Open AG</h1>
+          <p className="text-slate-400 mt-1">AI System for Insurance Agencies</p>
         </div>
 
         {/* Form */}

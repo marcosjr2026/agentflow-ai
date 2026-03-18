@@ -45,7 +45,7 @@ export default function Layout() {
                 <Bot className="h-7 w-7 text-slate-950" />
               </div>
               <div className="min-w-0">
-                <h1 className="truncate text-lg font-semibold tracking-tight">AgentFlow AI</h1>
+                <h1 className="truncate text-lg font-semibold tracking-tight">Open AG</h1>
                 <p className="truncate text-sm text-slate-400">{agency.name || 'Tu Agencia'}</p>
               </div>
             </div>
@@ -94,9 +94,9 @@ export default function Layout() {
           <div className="border-b border-slate-200/70 bg-white/70 backdrop-blur-xl">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">AgentFlow Console</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Open AG Console</p>
                 <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">
-                  {pageTitles[location.pathname] || 'AgentFlow AI'}
+                  {pageTitles[location.pathname] || 'Open AG'}
                 </h2>
               </div>
               <div className="hidden rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm md:block">
