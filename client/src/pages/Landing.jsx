@@ -290,31 +290,54 @@ function Features({ lang }) {
 }
 
 function DashboardPreview({ lang }) {
-  const T = t[lang];
+  const es = lang === 'es';
   const agents = [
-    { name: 'Agente Ventas', status: 'activo', conversations: 142, conversions: 38, rate: '26.8%', color: 'bg-emerald-400' },
-    { name: 'Agente Soporte', status: 'activo', conversations: 89, conversions: 21, rate: '23.6%', color: 'bg-blue-400' },
-    { name: 'Agente Citas', status: 'activo', conversations: 64, conversions: 19, rate: '29.7%', color: 'bg-yellow-400' },
-    { name: 'Agente Re-engage', status: 'pausado', conversations: 31, conversions: 7, rate: '22.6%', color: 'bg-slate-400' },
+    { name: es ? 'Agente Ventas' : 'Sales Agent', status: es ? 'activo' : 'active', conversations: 142, conversions: 38, rate: '26.8%', color: 'bg-emerald-400' },
+    { name: es ? 'Agente Soporte' : 'Support Agent', status: es ? 'activo' : 'active', conversations: 89, conversions: 21, rate: '23.6%', color: 'bg-blue-400' },
+    { name: es ? 'Agente Citas' : 'Booking Agent', status: es ? 'activo' : 'active', conversations: 64, conversions: 19, rate: '29.7%', color: 'bg-yellow-400' },
+    { name: es ? 'Agente Re-engage' : 'Re-engage Agent', status: es ? 'pausado' : 'paused', conversations: 31, conversions: 7, rate: '22.6%', color: 'bg-slate-400' },
+  ];
+  const docs = [
+    { name: 'María López', type: es ? 'Identificación' : 'ID Card', status: es ? 'Recibido' : 'Received', color: 'text-emerald-400' },
+    { name: 'Carlos Ruiz', type: es ? 'Residencia' : 'Proof of Residence', status: es ? 'Pendiente' : 'Pending', color: 'text-yellow-400' },
+    { name: 'Ana Torres', type: es ? 'Seguro médico' : 'Health Insurance', status: es ? 'Vencido' : 'Expired', color: 'text-red-400' },
+  ];
+  const payments = [
+    { name: 'Jorge Méndez', amount: '$189', date: 'Mar 20', status: es ? 'Próximo' : 'Upcoming', color: 'text-yellow-400' },
+    { name: 'Patricia Vega', amount: '$245', date: 'Mar 18', status: es ? 'Hoy' : 'Today', color: 'text-blue-400' },
+    { name: 'Luis Herrera', amount: '$312', date: 'Mar 15', status: es ? 'Fallido' : 'Failed', color: 'text-red-400' },
+    { name: 'Rosa Martínez', amount: '$178', date: 'Mar 14', status: es ? 'Pagado' : 'Paid', color: 'text-emerald-400' },
+  ];
+  const commissions = [
+    { name: 'Sofía R.', sales: 14, amount: '$2,100', trend: '↑' },
+    { name: 'Diego M.', sales: 11, amount: '$1,650', trend: '↑' },
+    { name: 'Valeria C.', sales: 8, amount: '$800', trend: '↓' },
+  ];
+  const campaigns = [
+    { name: es ? 'Beneficios Dentales — Abril' : 'Dental Benefits — April', sent: 142, opened: '68%', status: es ? 'Activa' : 'Active' },
+    { name: es ? 'Guía Telemedicina' : 'Telemedicine Guide', sent: 89, opened: '54%', status: es ? 'Programada' : 'Scheduled' },
+  ];
+  const integrations = [
+    { name: 'WhatsApp', color: 'bg-emerald-400', status: '✓' },
+    { name: 'CRM', color: 'bg-blue-400', status: '✓' },
+    { name: 'Email', color: 'bg-violet-400', status: '✓' },
   ];
   return (
     <section className="bg-slate-900 py-24 px-6">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 mb-4">
-            {lang === 'es' ? 'PANEL DE CONTROL' : 'CONTROL PANEL'}
+            {es ? 'PANEL DE CONTROL' : 'CONTROL PANEL'}
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-white">
-            {lang === 'es' ? 'Así se ve por dentro' : 'See what\'s inside'}
+            {es ? 'Así se ve por dentro' : "See what's inside"}
           </h2>
           <p className="mt-4 text-xl text-slate-400 max-w-2xl mx-auto">
-            {lang === 'es'
-              ? 'Tu comando central. Todo en tiempo real, desde cualquier dispositivo.'
-              : 'Your command center. Everything in real time, from any device.'}
+            {es ? 'Tu comando central. Todo en tiempo real, desde cualquier dispositivo.' : 'Your command center. Everything in real time, from any device.'}
           </p>
         </div>
 
-        {/* Browser mockup frame */}
+        {/* Browser mockup */}
         <div className="rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/50">
           {/* Browser chrome */}
           <div className="bg-slate-800 px-4 py-3 flex items-center gap-3 border-b border-white/10">
@@ -328,10 +351,10 @@ function DashboardPreview({ lang }) {
             </div>
           </div>
 
-          {/* Dashboard content */}
+          {/* Dashboard body */}
           <div className="bg-slate-950 flex">
             {/* Sidebar */}
-            <div className="hidden md:flex flex-col w-56 border-r border-white/10 p-4 gap-1">
+            <div className="hidden md:flex flex-col w-52 border-r border-white/10 p-4 gap-1 flex-shrink-0">
               <div className="flex items-center gap-2 px-3 py-2 mb-4">
                 <div className="h-7 w-7 bg-yellow-400 rounded-lg flex items-center justify-center">
                   <Bot className="h-4 w-4 text-slate-950" />
@@ -339,55 +362,155 @@ function DashboardPreview({ lang }) {
                 <span className="text-sm font-bold text-white">Open AG</span>
               </div>
               {[
-                { icon: BarChart3, label: lang === 'es' ? 'Dashboard' : 'Dashboard', active: true },
-                { icon: Bot, label: lang === 'es' ? 'Mis Agentes' : 'My Agents', active: false },
-                { icon: MessageSquare, label: lang === 'es' ? 'Conversaciones' : 'Conversations', active: false },
-                { icon: TrendingUp, label: lang === 'es' ? 'Reportes' : 'Reports', active: false },
-                { icon: Users, label: lang === 'es' ? 'Contactos' : 'Contacts', active: false },
+                { icon: BarChart3, label: 'Dashboard', active: true },
+                { icon: Bot, label: es ? 'Mis Agentes' : 'My Agents', active: false },
+                { icon: MessageSquare, label: es ? 'Conversaciones' : 'Conversations', active: false },
+                { icon: Users, label: es ? 'Contactos / CRM' : 'Contacts / CRM', active: false },
+                { icon: CheckCircle2, label: es ? 'Documentos' : 'Documents', active: false },
+                { icon: TrendingUp, label: es ? 'Pagos' : 'Payments', active: false },
+                { icon: BarChart3, label: es ? 'Comisiones' : 'Commissions', active: false },
+                { icon: Mail, label: es ? 'Educación' : 'Education', active: false },
               ].map(item => (
-                <div key={item.label} className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-colors ${item.active ? 'bg-yellow-400/10 text-yellow-400 font-medium' : 'text-slate-400'}`}>
-                  <item.icon className="h-4 w-4" />
+                <div key={item.label} className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs transition-colors ${item.active ? 'bg-yellow-400/10 text-yellow-400 font-medium' : 'text-slate-400'}`}>
+                  <item.icon className="h-3.5 w-3.5 flex-shrink-0" />
                   {item.label}
                 </div>
               ))}
+              {/* Integrations */}
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="text-xs text-slate-600 px-3 mb-2">{es ? 'Integraciones' : 'Integrations'}</p>
+                {integrations.map(i => (
+                  <div key={i.name} className="flex items-center gap-2 px-3 py-1.5">
+                    <div className={`w-1.5 h-1.5 rounded-full ${i.color}`} />
+                    <span className="text-xs text-slate-400">{i.name}</span>
+                    <span className="ml-auto text-xs text-emerald-400">{i.status}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Main content */}
-            <div className="flex-1 p-6 overflow-hidden">
-              {/* Stats row */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div className="flex-1 p-5 overflow-hidden space-y-5">
+              {/* Top stats */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
-                  { label: lang === 'es' ? 'Conversaciones hoy' : 'Conversations today', value: '326', delta: '+12%', color: 'text-emerald-400' },
-                  { label: lang === 'es' ? 'Conversiones' : 'Conversions', value: '85', delta: '+8%', color: 'text-emerald-400' },
-                  { label: lang === 'es' ? 'Tasa de cierre' : 'Close rate', value: '26.1%', delta: '+3.4%', color: 'text-emerald-400' },
-                  { label: lang === 'es' ? 'Agentes activos' : 'Active agents', value: '3/4', delta: '', color: 'text-yellow-400' },
+                  { label: es ? 'Conversaciones hoy' : 'Conversations today', value: '326', delta: '+12%', color: 'text-emerald-400' },
+                  { label: es ? 'Conversiones' : 'Conversions', value: '85', delta: '+8%', color: 'text-emerald-400' },
+                  { label: es ? 'Pagos pendientes' : 'Pending payments', value: '3', delta: es ? '⚠ seguimiento' : '⚠ follow-up', color: 'text-yellow-400' },
+                  { label: es ? 'Docs pendientes' : 'Pending docs', value: '7', delta: es ? '2 vencidos' : '2 expired', color: 'text-red-400' },
                 ].map(stat => (
                   <div key={stat.label} className="bg-white/5 rounded-2xl p-4 border border-white/10">
                     <p className="text-xs text-slate-400 mb-1">{stat.label}</p>
                     <p className="text-2xl font-bold text-white">{stat.value}</p>
-                    {stat.delta && <p className={`text-xs font-medium mt-1 ${stat.color}`}>{stat.delta}</p>}
+                    <p className={`text-xs font-medium mt-1 ${stat.color}`}>{stat.delta}</p>
                   </div>
                 ))}
               </div>
 
-              {/* Agents table */}
-              <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
-                <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                  <p className="text-sm font-semibold text-white">{lang === 'es' ? 'Tus Agentes' : 'Your Agents'}</p>
-                  <span className="text-xs bg-yellow-400/10 text-yellow-400 px-2 py-1 rounded-lg font-medium">Live</span>
+              {/* Row: Agents + Payments */}
+              <div className="grid lg:grid-cols-2 gap-4">
+                {/* Agents */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
+                    <p className="text-sm font-semibold text-white">{es ? 'Agentes' : 'Agents'}</p>
+                    <span className="text-xs bg-yellow-400/10 text-yellow-400 px-2 py-1 rounded-lg font-medium">Live</span>
+                  </div>
+                  <div className="divide-y divide-white/5">
+                    {agents.map(agent => (
+                      <div key={agent.name} className="flex items-center gap-3 px-4 py-2.5">
+                        <div className={`w-2 h-2 rounded-full ${agent.color} flex-shrink-0`} />
+                        <p className="text-xs text-white font-medium flex-1 truncate">{agent.name}</p>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${agent.status === 'activo' || agent.status === 'active' ? 'bg-emerald-400/10 text-emerald-400' : 'bg-slate-400/10 text-slate-400'}`}>
+                          {agent.status}
+                        </span>
+                        <p className="text-xs font-semibold text-yellow-400 w-12 text-right">{agent.rate}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="divide-y divide-white/5">
-                  {agents.map(agent => (
-                    <div key={agent.name} className="flex items-center gap-4 px-4 py-3">
-                      <div className={`w-2 h-2 rounded-full ${agent.color} flex-shrink-0`} />
-                      <p className="text-sm text-white font-medium flex-1 min-w-0 truncate">{agent.name}</p>
-                      <span className={`text-xs px-2 py-0.5 rounded-full hidden sm:inline ${agent.status === 'activo' || agent.status === 'active' ? 'bg-emerald-400/10 text-emerald-400' : 'bg-slate-400/10 text-slate-400'}`}>
-                        {agent.status}
-                      </span>
-                      <p className="text-xs text-slate-400 hidden md:block w-20 text-right">{agent.conversations} conv.</p>
-                      <p className="text-xs font-semibold text-yellow-400 w-14 text-right">{agent.rate}</p>
+
+                {/* Payments */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <p className="text-sm font-semibold text-white">{es ? 'Pagos & Cobros' : 'Payments'}</p>
+                  </div>
+                  <div className="divide-y divide-white/5">
+                    {payments.map(p => (
+                      <div key={p.name} className="flex items-center gap-3 px-4 py-2.5">
+                        <p className="text-xs text-white flex-1 truncate">{p.name}</p>
+                        <span className="text-xs text-slate-400">{p.date}</span>
+                        <span className="text-xs font-bold text-white w-14 text-right">{p.amount}</span>
+                        <span className={`text-xs font-medium w-16 text-right ${p.color}`}>{p.status}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Row: Documents + Commissions + Education */}
+              <div className="grid lg:grid-cols-3 gap-4">
+                {/* Documents */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <p className="text-sm font-semibold text-white">{es ? 'Documentos' : 'Documents'}</p>
+                  </div>
+                  <div className="divide-y divide-white/5">
+                    {docs.map(d => (
+                      <div key={d.name} className="px-4 py-2.5">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-white font-medium">{d.name}</p>
+                          <span className={`text-xs font-medium ${d.color}`}>{d.status}</span>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-0.5">{d.type}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Commissions */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <p className="text-sm font-semibold text-white">{es ? 'Comisiones' : 'Commissions'}</p>
+                  </div>
+                  <div className="divide-y divide-white/5">
+                    {commissions.map(c => (
+                      <div key={c.name} className="flex items-center gap-3 px-4 py-2.5">
+                        <p className="text-xs text-white flex-1">{c.name}</p>
+                        <span className="text-xs text-slate-400">{c.sales} {es ? 'ventas' : 'sales'}</span>
+                        <span className="text-xs font-bold text-yellow-400">{c.amount}</span>
+                        <span className={`text-xs ${c.trend === '↑' ? 'text-emerald-400' : 'text-red-400'}`}>{c.trend}</span>
+                      </div>
+                    ))}
+                    <div className="px-4 py-2 flex items-center justify-between">
+                      <p className="text-xs text-slate-500">Total {es ? 'mes' : 'month'}</p>
+                      <p className="text-xs font-bold text-white">$4,550</p>
                     </div>
-                  ))}
+                  </div>
+                </div>
+
+                {/* Education campaigns */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <p className="text-sm font-semibold text-white">{es ? 'Educación al Cliente' : 'Client Education'}</p>
+                  </div>
+                  <div className="divide-y divide-white/5">
+                    {campaigns.map(c => (
+                      <div key={c.name} className="px-4 py-2.5">
+                        <div className="flex items-center justify-between mb-1">
+                          <p className="text-xs text-white font-medium truncate pr-2">{c.name}</p>
+                          <span className={`text-xs flex-shrink-0 ${c.status === 'Activa' || c.status === 'Active' ? 'text-emerald-400' : 'text-blue-400'}`}>{c.status}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs text-slate-500">{c.sent} {es ? 'enviados' : 'sent'}</span>
+                          <span className="text-xs text-yellow-400">{c.opened} {es ? 'apertura' : 'open rate'}</span>
+                        </div>
+                      </div>
+                    ))}
+                    <div className="px-4 py-2.5">
+                      <p className="text-xs text-slate-500 mb-1">{es ? 'Próxima campaña' : 'Next campaign'}</p>
+                      <p className="text-xs text-white">{es ? 'Recordatorio beneficios — Mar 22' : 'Benefits reminder — Mar 22'}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
