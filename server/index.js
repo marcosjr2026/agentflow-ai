@@ -1,3 +1,4 @@
+import { seedAdmin } from './seed.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -62,8 +63,9 @@ app.use((err, req, res, next) => {
 });
 
 // ─── INICIO ───────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 AgentFlow AI server corriendo en puerto ${PORT}`);
+  await seedAdmin();
   initCronJobs();
 });
 
