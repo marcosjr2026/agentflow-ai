@@ -115,6 +115,81 @@ function AgentHighlight({ lang }) {
   );
 }
 
+
+function AgentConfig({ lang }) {
+  const T = t[lang];
+  const examples = lang === 'es' ? [
+    { from: 'user', msg: 'Las comisiones son: 1-5 ventas sin bono, 6-9 ventas $100 por venta, 10-14 ventas $150, 15 o más $200' },
+    { from: 'ai',  msg: '✅ Entendido. He configurado 4 tiers de comisión. ¿Quieres que aplique retroactivo a este mes?' },
+    { from: 'user', msg: 'Sí, y agrega que las cancelaciones en los primeros 30 días descuentan la comisión' },
+    { from: 'ai',  msg: '✅ Regla de cancelación agregada. Tus promotoras recibirán el reporte ajustado hoy a las 6pm.' },
+  ] : [
+    { from: 'user', msg: 'Commissions are: 1-5 sales no bonus, 6-9 sales $100 per sale, 10-14 sales $150, 15+ sales $200' },
+    { from: 'ai',  msg: '✅ Got it. I have configured 4 commission tiers. Should I apply it retroactively to this month?' },
+    { from: 'user', msg: 'Yes, and add that cancellations within 30 days deduct the commission' },
+    { from: 'ai',  msg: '✅ Cancellation rule added. Your agents will receive the adjusted report today at 6pm.' },
+  ];
+
+  return (
+    <section className="bg-slate-950 py-24 px-6 border-t border-white/10">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="rounded-3xl border border-white/10 bg-slate-800/50 p-6 space-y-4 backdrop-blur-sm order-2 lg:order-1">
+            <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+              <div className="h-10 w-10 rounded-full bg-yellow-400 flex items-center justify-center">
+                <Bot className="h-6 w-6 text-slate-950" />
+              </div>
+              <div>
+                <p className="font-semibold text-white text-sm">Open AG Admin</p>
+                <p className="text-xs text-emerald-400">● {lang === "es" ? "Tu agente de configuración" : "Your configuration agent"}</p>
+              </div>
+            </div>
+            {examples.map((m, i) => (
+              <div key={i} className={`flex ${m.from === "ai" ? "justify-start" : "justify-end"}`}>
+                <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${m.from === "ai" ? "bg-slate-700 text-slate-100 rounded-tl-sm" : "bg-yellow-400 text-slate-950 font-medium rounded-tr-sm"}`}>
+                  {m.msg}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300 mb-6">
+              <Zap className="h-4 w-4" />
+              {lang === "es" ? "Diferenciador exclusivo" : "Exclusive differentiator"}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+              {lang === "es" ? <>Configura tu sistema<br /><span className="text-emerald-400">hablando con tu agente</span></> : <>Configure your system<br /><span className="text-emerald-400">by talking to your agent</span></>}
+            </h2>
+            <p className="mt-6 text-lg text-slate-300 leading-relaxed">
+              {lang === "es"
+                ? "No más formularios complejos ni manuales de configuración. Tu agente entiende lenguaje natural y convierte tus instrucciones en reglas del sistema — comisiones, rutas de mensajes, horarios, alertas. Todo en una conversación de WhatsApp."
+                : "No more complex forms or setup manuals. Your agent understands natural language and converts your instructions into system rules — commissions, message routing, schedules, alerts. All in a WhatsApp conversation."}
+            </p>
+            <ul className="mt-8 space-y-4">
+              {(lang === "es" ? [
+                "Configura comisiones por tiers en lenguaje natural",
+                "Define rutas de mensajes y escalaciones hablando",
+                "Ajusta horarios, mensajes y reglas cuando quieras",
+                "El agente confirma cada cambio antes de aplicarlo",
+              ] : [
+                "Set up commission tiers in natural language",
+                "Define message routing and escalations by talking",
+                "Adjust schedules, messages, and rules anytime",
+                "The agent confirms every change before applying it",
+              ]).map(f => (
+                <li key={f} className="flex items-start gap-3 text-slate-300">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />{f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Features({ lang }) {
   const T = t[lang];
   const features = [
@@ -287,6 +362,7 @@ export default function Landing() {
       <NavBar lang={lang} onLang={toggleLang} />
       <Hero lang={lang} />
       <AgentHighlight lang={lang} />
+      <AgentConfig lang={lang} />
       <Features lang={lang} />
       <HowItWorks lang={lang} />
       <Comparison lang={lang} />
