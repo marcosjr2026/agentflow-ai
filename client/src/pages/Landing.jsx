@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bot, MessageSquare, Phone, BarChart3, Shield, Zap, Users, CheckCircle2, ArrowRight, Globe, Brain, TrendingUp, ChevronDown } from 'lucide-react';
+import { Bot, MessageSquare, Phone, BarChart3, Zap, Users, CheckCircle2, ArrowRight, Globe, Brain, TrendingUp, ChevronDown } from 'lucide-react';
 import { t, setLang } from '../lib/i18n';
 
 function NavBar({ lang, onLang }) {
@@ -175,15 +175,7 @@ function HowItWorks({ lang }) {
             </div>
           ))}
         </div>
-        <div className="mt-16 rounded-3xl border border-yellow-400/20 bg-yellow-400/5 p-8">
-          <div className="flex items-start gap-4">
-            <Shield className="h-8 w-8 text-yellow-400 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="text-xl font-semibold text-white mb-2">{T.how_vps_h}</h3>
-              <p className="text-slate-300 leading-relaxed">{T.how_vps_d}</p>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
   );
