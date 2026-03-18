@@ -1,5 +1,6 @@
 import Onboarding from './pages/Onboarding';
 import SuperAdmin from './pages/SuperAdmin';
+import SettingsPage from './pages/Settings';
 import Landing from './pages/Landing';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="calls" element={<Calls />} />
             <Route path="payments" element={<Payments />} />
             <Route path="analytics" element={<Analytics />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
 
           <Route path="/onboarding" element={<Onboarding />} />
