@@ -225,28 +225,6 @@ function AgentConfig({ lang }) {
           </div>
         </div>
 
-        {/* Tier comparison */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {tiers.map(tier => (
-            <div key={tier.plan} className={`rounded-3xl border ${tier.color} p-6`}>
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-white font-bold text-lg">{tier.plan}</h3>
-                <span className={`text-xs font-bold px-3 py-1 rounded-full ${tier.badge}`}>{tier.plan}</span>
-              </div>
-              <ul className="space-y-3">
-                {tier.items.map(item => (
-                  <li key={item.label} className="flex items-center gap-3 text-sm">
-                    {item.ok
-                      ? <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-                      : <div className="h-4 w-4 rounded-full border border-slate-600 flex-shrink-0" />
-                    }
-                    <span className={item.ok ? 'text-slate-200' : 'text-slate-600'}>{item.label}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
