@@ -764,6 +764,59 @@ function Pricing({ lang }) {
   );
 }
 
+function AgentCapabilities({ lang }) {
+  const es = lang === 'es';
+  const features = [
+    { label: es ? 'Ajustar horarios y bienvenida'         : 'Set hours & welcome message',      starter: true,  growth: true,  pro: true  },
+    { label: es ? 'Configurar comisiones con el agente'   : 'Configure commissions with agent',  starter: false, growth: true,  pro: true  },
+    { label: es ? 'Definir rutas de mensajes hablando'    : 'Define message flows by voice',     starter: false, growth: true,  pro: true  },
+    { label: es ? 'Reglas de escalación avanzadas'        : 'Advanced escalation rules',         starter: false, growth: true,  pro: true  },
+    { label: es ? 'Comandos ilimitados al agente'         : 'Unlimited agent commands',          starter: false, growth: false, pro: true  },
+    { label: es ? 'Chat interno con el equipo'            : 'Internal team chat',                starter: false, growth: true,  pro: true  },
+    { label: es ? 'OAG activo en el chat interno'         : 'OAG active in internal chat',       starter: false, growth: false, pro: true  },
+  ];
+
+  const Check = ({ ok }) => ok
+    ? <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+    : <div className="h-5 w-5 rounded-full border border-white/20 flex-shrink-0" />;
+
+  const plans = [
+    { name: 'Starter', badge: null,            badgeColor: 'bg-slate-500/20 text-slate-400',   key: 'starter' },
+    { name: 'Growth',  badge: null,            badgeColor: 'bg-yellow-400/20 text-yellow-400', key: 'growth'  },
+    { name: 'Pro',     badge: null,            badgeColor: 'bg-emerald-400/20 text-emerald-400', key: 'pro'   },
+  ];
+
+  return (
+    <section className="bg-slate-950 pb-24 px-6">
+      <div className="mx-auto max-w-5xl">
+        <h3 className="text-center text-sm font-semibold uppercase tracking-widest text-slate-500 mb-8">
+          {es ? '¿Qué puedes hacer con tu OAG según tu plan?' : 'What can you do with your OAG by plan?'}
+        </h3>
+        <div className="grid md:grid-cols-3 gap-4">
+          {plans.map(p => (
+            <div key={p.key} className={`rounded-2xl border p-6 ${p.key === 'growth' ? 'border-yellow-400/30 bg-white/5' : 'border-white/10 bg-white/3'}`}>
+              <div className="flex items-center justify-between mb-5">
+                <p className="font-bold text-white">{p.name}</p>
+                <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${p.key === 'starter' ? 'bg-slate-500/20 text-slate-400' : p.key === 'growth' ? 'bg-yellow-400/20 text-yellow-400' : 'bg-emerald-400/20 text-emerald-400'}`}>
+                  {p.name}
+                </span>
+              </div>
+              <div className="space-y-3">
+                {features.map((f, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <Check ok={f[p.key]} />
+                    <span className={`text-sm ${f[p.key] ? 'text-slate-200' : 'text-slate-600'}`}>{f.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CTA({ lang }) {
   const T = t[lang];
   return (
@@ -800,6 +853,7 @@ export default function Landing() {
       <ChatPreview lang={lang} />
       <Comparison lang={lang} />
       <Pricing lang={lang} />
+      <AgentCapabilities lang={lang} />
       <CTA lang={lang} />
       <footer className="bg-slate-950 border-t border-white/10 py-12 px-6">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
