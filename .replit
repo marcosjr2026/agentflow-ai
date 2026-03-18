@@ -9,7 +9,9 @@ externalPort = 80
 expertMode = true
 
 [deployment]
+run = ["bash", "start.sh"]
 deploymentTarget = "cloudrun"
+build = ["bash", "-c", "cd client && npm install && npm run build"]
 
 [workflows]
 runButton = "Project"
