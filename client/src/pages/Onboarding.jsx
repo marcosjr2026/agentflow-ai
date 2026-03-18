@@ -6,10 +6,12 @@ import { t, defaultLang, setLang } from '../lib/i18n';
 
 const API = import.meta.env.VITE_API_URL || '/api';
 const tok = () => localStorage.getItem('token');
-const ICONS = [Building2, MessageSquare, BookOpen, Users, DollarSign];
+const ICONS = [Building2, MessageSquare, BookOpen, Users];
 
-function Step1({ data, setData, T }) {
-  const types = ['Medicare Advantage','Medicare Supplement','Medicaid','Vida','Auto','Hogar','Dental','Visión'];
+function Step1({ data, setData, T, lang }) {
+  const types = lang === 'es'
+    ? ['Medicare Advantage','Medicare Supplement','Medicaid','ACA','Privados','Vida','Auto','Hogar','Dental','Visión','Otro']
+    : ['Medicare Advantage','Medicare Supplement','Medicaid','ACA','Private','Life','Auto','Home','Dental','Vision','Other'];
   const toggle = (v) => setData(d => ({ ...d, insuranceTypes: (d.insuranceTypes||[]).includes(v) ? (d.insuranceTypes||[]).filter(x=>x!==v) : [...(d.insuranceTypes||[]),v] }));
   return (
     <div className="space-y-6">
@@ -229,10 +231,10 @@ export default function Onboarding() {
   const [lang, setLangState] = useState(defaultLang());
   const T = t[lang];
   const toggleLang = () => { const n = lang==='es'?'en':'es'; setLang(n); setLangState(n); };
-  const [data, setData] = useState({ primaryLang:'both', insuranceTypes:[], paymentReminderDays:3, commissionPeriod:'monthly', commissionTiers:[], faqs:[] });
+  const [data, setData] = useState({ primaryLang:'both', insuranceTypes:[], paymentReminderDays:3, faqs:[] });
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
-  const stepLabels = [T.ob_step1,T.ob_step2,T.ob_step3,T.ob_step4,T.ob_step5];
+  const stepLabels = [T.ob_step1,T.ob_step2,T.ob_step3,T.ob_step4];
 
   const canNext = () => step===1 ? data.agencyDisplayName?.trim() : true;
 
@@ -266,7 +268,7 @@ export default function Onboarding() {
           </div>
           <div className="flex items-center gap-3">
             <button onClick={toggleLang} className="flex items-center gap-1 text-xs text-slate-400 border border-white/10 rounded-lg px-3 py-1.5 hover:text-white transition-colors"><Globe className="h-3.5 w-3.5"/>{lang==='es'?'EN':'ES'}</button>
-            <span className="text-slate-400 text-sm">{step} / 5</span>
+            <span className="text-slate-400 text-sm">{step} / 4</span>
           </div>
         </div>
       </div>
@@ -282,7 +284,7 @@ export default function Onboarding() {
                   </div>
                   <span className={`text-xs font-medium hidden sm:block ${step===i+1?'text-slate-900':'text-slate-400'}`}>{label}</span>
                 </div>
-                {i<4&&<div className={`flex-1 h-px ${step>i+1?'bg-slate-900':'bg-slate-200'}`}/>}
+                {i<3&&<div className={`flex-1 h-px ${step>i+1?'bg-slate-900':'bg-slate-200'}`}/>}
               </div>
             ))}
           </div>
@@ -292,23 +294,22 @@ export default function Onboarding() {
       <div className="mx-auto max-w-3xl px-6 py-10">
         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-900">{[T.ob_s1_h,T.ob_s2_h,T.ob_s3_h,T.ob_s4_h,T.ob_s5_h][step-1]}</h2>
-            <p className="mt-2 text-slate-500">{[T.ob_s1_sub,T.ob_s2_sub,T.ob_s3_sub,T.ob_s4_sub,T.ob_s5_sub][step-1]}</p>
+            <h2 className="text-2xl font-bold text-slate-900">{[T.ob_s1_h,T.ob_s2_h,T.ob_s3_h,T.ob_s4_h][step-1]}</h2>
+            <p className="mt-2 text-slate-500">{[T.ob_s1_sub,T.ob_s2_sub,T.ob_s3_sub,T.ob_s4_sub][step-1]}</p>
           </div>
-          {step===1&&<Step1 data={data} setData={setData} T={T}/>}
+          {step===1&&<Step1 data={data} setData={setData} T={T} lang={lang}/>}
           {step===2&&<Step2 data={data} setData={setData} T={T}/>}
           {step===3&&<Step3 data={data} setData={setData} T={T}/>}
           {step===4&&<Step4 data={data} setData={setData} T={T}/>}
-          {step===5&&<Step5 data={data} setData={setData} T={T}/>}
           <div className="flex items-center justify-between mt-10 pt-6 border-t border-slate-100">
             <button onClick={()=>setStep(s=>s-1)} disabled={step===1} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
               <ArrowLeft className="h-4 w-4"/>{T.ob_prev}
             </button>
             <div className="flex gap-1">
-              {[1,2,3,4,5].map(n=><div key={n} className={`h-2 rounded-full transition-all ${step===n?'w-6 bg-yellow-400':step>n?'w-2 bg-slate-900':'w-2 bg-slate-200'}`}/>)}
+              {[1,2,3,4].map(n=><div key={n} className={`h-2 rounded-full transition-all ${step===n?'w-6 bg-yellow-400':step>n?'w-2 bg-slate-900':'w-2 bg-slate-200'}`}/>)}
             </div>
-            <button onClick={step<5?()=>setStep(s=>s+1):handleFinish} disabled={!canNext()||saving} className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 font-semibold text-sm px-6 py-3 rounded-2xl transition-all">
-              {saving?T.ob_saving:step===5?T.ob_finish:T.ob_next}<ArrowRight className="h-4 w-4"/>
+            <button onClick={step<4?()=>setStep(s=>s+1):handleFinish} disabled={!canNext()||saving} className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 font-semibold text-sm px-6 py-3 rounded-2xl transition-all">
+              {saving?T.ob_saving:step===4?T.ob_finish:T.ob_next}<ArrowRight className="h-4 w-4"/>
             </button>
           </div>
         </div>
