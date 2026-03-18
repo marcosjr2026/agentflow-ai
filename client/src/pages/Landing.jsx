@@ -593,12 +593,143 @@ function Comparison({ lang }) {
   );
 }
 
+function ChatPreview({ lang }) {
+  const T = t[lang];
+  const es = lang === 'es';
+  const messages = [
+    { from: 'agent', name: T.chat_badge_agent, text: es ? '⚠️ Carlos Ruiz — pago fallido por $245. Tercer intento. Requiere atención inmediata.' : '⚠️ Carlos Ruiz — failed payment $245. Third attempt. Needs immediate attention.', time: '9:41 AM' },
+    { from: 'human', name: T.chat_badge_sofia, text: es ? '@OAG ¿cuántas pólizas tiene Carlos activas?' : '@OAG how many active policies does Carlos have?', time: '9:42 AM' },
+    { from: 'agent', name: T.chat_badge_agent, text: es ? 'Carlos tiene 2 pólizas activas: Dental ($89/mes) y Visión ($45/mes). Lleva 8 meses como cliente. Nunca había fallado un pago antes.' : 'Carlos has 2 active policies: Dental ($89/mo) and Vision ($45/mo). He\'s been a client for 8 months. First failed payment.', time: '9:42 AM' },
+    { from: 'human', name: T.chat_badge_you, text: es ? '@OAG envíale un mensaje de cortesía a Carlos, no de cobro' : '@OAG send Carlos a courtesy message, not a collections message', time: '9:43 AM' },
+    { from: 'agent', name: T.chat_badge_agent, text: es ? '✅ Enviado. Mensaje de cortesía enviado a Carlos por WhatsApp. Te notifico cuando responda.' : '✅ Done. Courtesy message sent to Carlos via WhatsApp. I\'ll notify you when he responds.', time: '9:43 AM' },
+  ];
+  const channels = [
+    { name: es ? '# ventas-general' : '# sales-general', active: false },
+    { name: es ? '# soporte' : '# support', active: false },
+    { name: es ? '# admin' : '# admin', active: false },
+    { name: es ? '🔴 Carlos Ruiz' : '🔴 Carlos Ruiz', active: true },
+    { name: es ? '# María López' : '# Maria Lopez', active: false },
+  ];
+  return (
+    <section className="bg-slate-950 py-24 px-6 border-t border-white/10">
+      <div className="mx-auto max-w-7xl">
+        <div className="text-center mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pink-400 mb-4">{T.chat_label}</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-white">{T.chat_h2}</h2>
+          <p className="mt-4 text-xl text-slate-400 max-w-2xl mx-auto">{T.chat_sub}</p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Chat mockup */}
+          <div className="rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/50">
+            {/* Browser chrome */}
+            <div className="bg-slate-800 px-4 py-3 flex items-center gap-3 border-b border-white/10">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+                <div className="w-3 h-3 rounded-full bg-green-500/70" />
+              </div>
+              <div className="flex-1 bg-slate-700/60 rounded-md px-3 py-1 text-xs text-slate-400 max-w-xs mx-auto text-center">
+                app.opnag.com/chat
+              </div>
+            </div>
+
+            <div className="flex bg-slate-950" style={{height: '420px'}}>
+              {/* Channel list */}
+              <div className="w-44 border-r border-white/10 flex flex-col flex-shrink-0">
+                <div className="p-3 border-b border-white/10">
+                  <p className="text-xs font-bold text-white truncate">{es ? 'Mi Agencia' : 'My Agency'}</p>
+                  <p className="text-xs text-emerald-400 mt-0.5">● {es ? 'OAG activo' : 'OAG active'}</p>
+                </div>
+                <div className="flex-1 p-2 space-y-0.5 overflow-hidden">
+                  {channels.map(ch => (
+                    <div key={ch.name} className={`px-2 py-1.5 rounded-lg text-xs cursor-pointer truncate ${ch.active ? 'bg-white/10 text-white font-medium' : 'text-slate-400 hover:text-slate-300'}`}>
+                      {ch.name}
+                    </div>
+                  ))}
+                </div>
+                <div className="p-2 border-t border-white/10">
+                  <div className="flex items-center gap-2 px-2 py-1.5">
+                    <div className="w-5 h-5 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0">
+                      <Bot className="h-3 w-3 text-slate-950" />
+                    </div>
+                    <span className="text-xs text-slate-400 truncate">OAG</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 ml-auto flex-shrink-0" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Messages */}
+              <div className="flex-1 flex flex-col">
+                <div className="px-4 py-3 border-b border-white/10 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <p className="text-sm font-semibold text-white">Carlos Ruiz</p>
+                  <span className="text-xs text-slate-500 ml-auto">{es ? 'Caso abierto' : 'Open case'}</span>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  {messages.map((msg, i) => (
+                    <div key={i} className={`flex gap-3 ${msg.from === 'human' && msg.name === T.chat_badge_you ? 'flex-row-reverse' : ''}`}>
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold ${msg.from === 'agent' ? 'bg-yellow-400 text-slate-950' : msg.name === T.chat_badge_you ? 'bg-blue-500 text-white' : 'bg-violet-500 text-white'}`}>
+                        {msg.from === 'agent' ? <Bot className="h-3.5 w-3.5" /> : msg.name[0]}
+                      </div>
+                      <div className={`max-w-xs ${msg.from === 'human' && msg.name === T.chat_badge_you ? 'items-end' : ''}`}>
+                        <div className="flex items-baseline gap-2 mb-1">
+                          <span className={`text-xs font-semibold ${msg.from === 'agent' ? 'text-yellow-400' : 'text-slate-300'}`}>{msg.name}</span>
+                          <span className="text-xs text-slate-600">{msg.time}</span>
+                        </div>
+                        <div className={`text-xs leading-relaxed px-3 py-2 rounded-2xl ${msg.from === 'agent' ? 'bg-yellow-400/10 text-slate-200 border border-yellow-400/20' : 'bg-white/8 text-slate-200'}`}>
+                          {msg.text}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Input */}
+                <div className="p-3 border-t border-white/10">
+                  <div className="flex items-center gap-2 bg-white/5 rounded-xl px-3 py-2 border border-white/10">
+                    <span className="text-xs text-slate-500 flex-1">{es ? 'Mensaje al canal o @OAG...' : 'Message channel or @OAG...'}</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-slate-600" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature list */}
+          <div className="space-y-6">
+            {[
+              { icon: Hash, color: 'bg-pink-500/10 text-pink-400', text: T.chat_feat1 },
+              { icon: Zap, color: 'bg-yellow-500/10 text-yellow-400', text: T.chat_feat2 },
+              { icon: MessageSquare, color: 'bg-blue-500/10 text-blue-400', text: T.chat_feat3 },
+              { icon: Bot, color: 'bg-emerald-500/10 text-emerald-400', text: T.chat_feat4 },
+            ].map((f, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${f.color} flex-shrink-0`}>
+                  <f.icon className="h-5 w-5" />
+                </div>
+                <p className="text-lg text-slate-300 leading-relaxed pt-1.5">{f.text}</p>
+              </div>
+            ))}
+            <div className="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10">
+              <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">{es ? 'Disponible en' : 'Available in'}</p>
+              <div className="flex gap-3">
+                <span className="text-xs bg-white/10 text-slate-300 px-3 py-1 rounded-full">Growth</span>
+                <span className="text-xs bg-yellow-400/10 text-yellow-400 px-3 py-1 rounded-full font-medium">Pro</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Pricing({ lang }) {
   const T = t[lang];
   const plans = [
     { name: 'Starter', price: '$497', setup: `$1,500 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_starter_f1,T.price_starter_f2,T.price_starter_f3,T.price_starter_f4,T.price_starter_f4b,T.price_starter_f5] },
-    { name: 'Growth', price: '$797', setup: `$2,000 ${T.price_setup}`, color: 'border-yellow-400/50', badge: T.price_popular, features: [T.price_growth_f1,T.price_growth_f2,T.price_growth_f3,T.price_growth_f3b,T.price_growth_f4,T.price_growth_f5,T.price_growth_f6,T.price_growth_f7] },
-    { name: 'Pro', price: '$1,297', setup: `$3,000 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_pro_f1,T.price_pro_f2,T.price_pro_f3,T.price_pro_f3b,T.price_pro_f4,T.price_pro_f5,T.price_pro_f6,T.price_pro_f7] },
+    { name: 'Growth', price: '$797', setup: `$2,000 ${T.price_setup}`, color: 'border-yellow-400/50', badge: T.price_popular, features: [T.price_growth_f1,T.price_growth_f2,T.price_growth_f3,T.price_growth_f3b,T.price_growth_f4,T.price_growth_f5,T.price_growth_f6,T.price_growth_f7,T.price_growth_f8] },
+    { name: 'Pro', price: '$1,297', setup: `$3,000 ${T.price_setup}`, color: 'border-white/10', badge: null, features: [T.price_pro_f1,T.price_pro_f2,T.price_pro_f3,T.price_pro_f3b,T.price_pro_f4,T.price_pro_f5,T.price_pro_f6,T.price_pro_f7,T.price_pro_f8] },
   ];
   return (
     <section id="pricing" className="bg-slate-950 py-24 px-6 border-t border-white/10">
@@ -666,6 +797,7 @@ export default function Landing() {
       <Features lang={lang} />
       <DashboardPreview lang={lang} />
       <HowItWorks lang={lang} />
+      <ChatPreview lang={lang} />
       <Comparison lang={lang} />
       <Pricing lang={lang} />
       <CTA lang={lang} />
