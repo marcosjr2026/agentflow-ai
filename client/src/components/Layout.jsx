@@ -5,21 +5,21 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { to: '/dashboard',     label: 'Dashboard',      icon: LayoutDashboard },
-  { to: '/conversations', label: 'Conversaciones', icon: MessageSquare },
-  { to: '/contacts',      label: 'Contactos',      icon: Users },
-  { to: '/calls',         label: 'Llamadas AI',    icon: Phone },
-  { to: '/payments',      label: 'Pagos',          icon: CreditCard },
-  { to: '/analytics',     label: 'Analytics',      icon: BarChart3 },
+  { to: '/app/dashboard',     label: 'Dashboard',      icon: LayoutDashboard },
+  { to: '/app/conversations', label: 'Conversaciones', icon: MessageSquare },
+  { to: '/app/contacts',      label: 'Contactos',      icon: Users },
+  { to: '/app/calls',         label: 'Llamadas AI',    icon: Phone },
+  { to: '/app/payments',      label: 'Pagos',          icon: CreditCard },
+  { to: '/app/analytics',     label: 'Analytics',      icon: BarChart3 },
 ];
 
 const pageTitles = {
-  '/dashboard': 'Resumen ejecutivo',
-  '/conversations': 'Conversaciones',
-  '/contacts': 'Contactos',
-  '/calls': 'Llamadas AI',
-  '/payments': 'Pagos',
-  '/analytics': 'Analytics',
+  '/app/dashboard': 'Resumen ejecutivo',
+  '/app/conversations': 'Conversaciones',
+  '/app/contacts': 'Contactos',
+  '/app/calls': 'Llamadas AI',
+  '/app/payments': 'Pagos',
+  '/app/analytics': 'Analytics',
 };
 
 export default function Layout() {

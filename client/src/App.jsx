@@ -24,17 +24,20 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
+
+          {/* Protected app routes */}
           <Route
-            path="/"
+            path="/app"
             element={
               <PrivateRoute>
                 <Layout />
               </PrivateRoute>
             }
           >
-            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route index element={<Navigate to="/app/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="conversations" element={<Conversations />} />
             <Route path="conversations/:id" element={<ConversationDetail />} />
@@ -43,6 +46,9 @@ export default function App() {
             <Route path="payments" element={<Payments />} />
             <Route path="analytics" element={<Analytics />} />
           </Route>
+
+          {/* Legacy redirects */}
+          <Route path="/dashboard" element={<Navigate to="/app/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
