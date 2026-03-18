@@ -1,7 +1,7 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, MessageSquare, Users, Phone,
-  CreditCard, BarChart3, LogOut, Bot, ChevronRight
+  CreditCard, BarChart3, LogOut, Bot, ChevronRight, ShieldCheck
 } from 'lucide-react';
 
 const navItems = [
@@ -79,7 +79,16 @@ export default function Layout() {
             ))}
           </nav>
 
-          <div className="border-t border-white/10 p-4">
+          <div className="border-t border-white/10 p-4 space-y-1">
+            {user.role === 'super_admin' && (
+              <button
+                onClick={() => navigate('/admin')}
+                className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm text-yellow-400 transition-colors hover:bg-yellow-400/10"
+              >
+                <ShieldCheck className="h-5 w-5" />
+                Super Admin
+              </button>
+            )}
             <button
               onClick={handleLogout}
               className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-400 transition-colors hover:bg-white/5 hover:text-white"

@@ -1,4 +1,5 @@
 import Onboarding from './pages/Onboarding';
+import SuperAdmin from './pages/SuperAdmin';
 import Landing from './pages/Landing';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -49,6 +50,7 @@ export default function App() {
           </Route>
 
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/admin" element={<PrivateRoute><SuperAdmin /></PrivateRoute>} />
           {/* Legacy redirects */}
           <Route path="/dashboard" element={<Navigate to="/app/dashboard" replace />} />
         </Routes>
