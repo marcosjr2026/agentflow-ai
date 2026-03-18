@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
-import { Settings, Users, BookOpen, DollarSign, Upload, Plus, Trash2, Save, CheckCircle2, Clock, Phone } from 'lucide-react';
+import { Settings, Users, BookOpen, DollarSign, Upload, Plus, Trash2, Save, CheckCircle2, Clock, Phone, Sparkles } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL || '/api';
 const tok = () => localStorage.getItem('token');
 
 const TABS = [
-  { id: 'agent',       label: 'Agente',        icon: Settings },
+  { id: 'soul',        label: 'Identidad',      icon: Sparkles },
+  { id: 'agent',       label: 'Comportamiento', icon: Settings },
   { id: 'team',        label: 'Equipo',         icon: Users },
   { id: 'knowledge',   label: 'Conocimiento',   icon: BookOpen },
   { id: 'commissions', label: 'Comisiones',     icon: DollarSign },
@@ -20,6 +21,130 @@ function SaveBtn({ saving, saved, onClick }) {
       {saved ? <CheckCircle2 className="h-4 w-4" /> : <Save className="h-4 w-4" />}
       {saving ? 'Guardando...' : saved ? 'Guardado' : 'Guardar'}
     </button>
+  );
+}
+
+function SoulTab() {
+  const [form, setForm] = useState({
+    agentName: '',
+    agentGender: 'female',
+    agentTone: 'warm',
+    openingPhrase: '',
+    closingPhrase: '',
+    values: [],
+  });
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const tones = [
+    ['warm',         '🤗 Cálido'],
+    ['professional', '💼 Profesional'],
+    ['formal',       '🎩 Formal'],
+    ['friendly',     '😊 Amigable'],
+  ];
+
+  const valueOptions = [
+    'Paciente', 'Empático', 'Nunca presiona', 'Siempre saluda por nombre',
+    'Conciso', 'Proactivo', 'Respetuoso', 'Siempre ofrece ayuda adicional',
+  ];
+
+  const toggleValue = (v) => setForm(f => ({
+    ...f,
+    values: f.values.includes(v) ? f.values.filter(x => x !== v) : [...f.values, v]
+  }));
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await axios.post(`${API}/onboarding`, { agentSoul: form }, { headers: { Authorization: `Bearer ${tok()}` } });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } finally { setSaving(false); }
+  };
+
+  const preview = form.agentName
+    ? `Hola${form.agentTone === 'formal' ? '.' : ' 👋'} ${form.openingPhrase || `Soy ${form.agentName}, el asistente de tu agencia`}. ¿En qué puedo ayudarte hoy?`
+    : 'Completa el nombre del agente para ver la vista previa.';
+
+  return (
+    <div className="space-y-8">
+      {/* Preview */}
+      <div className="p-5 rounded-2xl bg-slate-900 border border-slate-700">
+        <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">Vista previa — primer mensaje</p>
+        <div className="flex items-start gap-3">
+          <div className="w-9 h-9 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0 text-sm font-bold text-slate-950">
+            {form.agentName ? form.agentName[0].toUpperCase() : '?'}
+          </div>
+          <div className="bg-slate-700 rounded-2xl rounded-tl-sm px-4 py-3 text-sm text-slate-100 leading-relaxed max-w-sm">
+            {preview}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Nombre del agente</label>
+          <input value={form.agentName} onChange={e => setForm(f => ({ ...f, agentName: e.target.value }))}
+            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none text-sm"
+            placeholder="Sofia, Carlos, Ana..." />
+          <p className="text-xs text-slate-400 mt-1">El nombre que usarán tus clientes para conocerlo.</p>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">Género</label>
+          <div className="flex gap-3">
+            {[['female', '👩 Femenino'], ['male', '👨 Masculino'], ['neutral', '🧑 Neutro']].map(([v, l]) => (
+              <button key={v} onClick={() => setForm(f => ({ ...f, agentGender: v }))}
+                className={`flex-1 py-3 rounded-xl border text-sm font-medium transition-all ${form.agentGender === v ? 'bg-yellow-400 border-yellow-400 text-slate-950' : 'border-slate-200 text-slate-600 hover:border-yellow-300'}`}>
+                {l}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-3">Tono de comunicación</label>
+        <div className="grid grid-cols-4 gap-3">
+          {tones.map(([v, l]) => (
+            <button key={v} onClick={() => setForm(f => ({ ...f, agentTone: v }))}
+              className={`py-3 rounded-xl border text-sm font-medium transition-all ${form.agentTone === v ? 'bg-yellow-400 border-yellow-400 text-slate-950' : 'border-slate-200 text-slate-600 hover:border-yellow-300'}`}>
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">Frase de apertura personalizada</label>
+        <input value={form.openingPhrase} onChange={e => setForm(f => ({ ...f, openingPhrase: e.target.value }))}
+          className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none text-sm"
+          placeholder={`Soy ${form.agentName || 'Sofia'}, el asistente de [Agencia]`} />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">Frase de despedida</label>
+        <input value={form.closingPhrase} onChange={e => setForm(f => ({ ...f, closingPhrase: e.target.value }))}
+          className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none text-sm"
+          placeholder="Que tengas un excelente día. Estoy aquí si me necesitas 😊" />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-3">Valores del agente</label>
+        <div className="flex flex-wrap gap-2">
+          {valueOptions.map(v => (
+            <button key={v} onClick={() => toggleValue(v)}
+              className={`px-4 py-2 rounded-full text-sm border transition-all ${form.values.includes(v) ? 'bg-slate-900 border-slate-900 text-white' : 'border-slate-200 text-slate-600 hover:border-slate-400'}`}>
+              {v}
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-slate-400 mt-2">Estos valores guían cómo el agente responde en situaciones difíciles.</p>
+      </div>
+
+      <div className="flex justify-end pt-2">
+        <SaveBtn saving={saving} saved={saved} onClick={save} />
+      </div>
+    </div>
   );
 }
 
@@ -440,6 +565,7 @@ export default function SettingsPage() {
 
         {/* Tab content */}
         <div className="bg-white rounded-2xl border border-slate-200 p-8">
+          {activeTab === 'soul'        && <SoulTab />}
           {activeTab === 'agent'       && <AgentTab />}
           {activeTab === 'team'        && <TeamTab />}
           {activeTab === 'knowledge'   && <KnowledgeTab />}

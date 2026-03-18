@@ -244,6 +244,7 @@ function Features({ lang }) {
     { icon: Mail, color: 'bg-cyan-500/10 text-cyan-400', title: T.feat7_title, desc: T.feat7_desc },
     { icon: Hash, color: 'bg-pink-500/10 text-pink-400', title: T.feat8_title, desc: T.feat8_desc },
     { icon: TrendingUp, color: 'bg-orange-500/10 text-orange-400', title: T.feat9_title, desc: T.feat9_desc },
+    { icon: Zap, color: 'bg-rose-500/10 text-rose-400', title: T.feat10_title, desc: T.feat10_desc },
   ];
   return (
     <section id="features" className="bg-slate-950 py-24 px-6">

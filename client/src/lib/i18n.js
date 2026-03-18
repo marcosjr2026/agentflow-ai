@@ -48,6 +48,8 @@ export const t = {
     feat8_desc: 'Canal de comunicación interno estilo Slack — por cliente, por departamento, y con tu agente participando. El agente postea alertas, responde preguntas del equipo y recibe instrucciones, todo dentro de la plataforma.',
     feat9_title: 'Comisiones Configurables por Voz',
     feat9_desc: 'Tu agente administra las comisiones de tu equipo. Dile en lenguaje natural: "cambia la regla a $200 por venta si superan 10 este mes" — y listo. Sin formularios, sin hojas de cálculo. Las reglas cambian cuando tú lo decides.',
+    feat10_title: 'Tu Agente Tiene Identidad',
+    feat10_desc: 'Dale un nombre, un tono y una forma de hablar. "Hola, soy Sofia, el asistente de Miami Seguros." — No un bot genérico. Una persona de tu equipo que tus clientes van a reconocer y confiar.',
     // How
     how_label: 'Proceso',
     how_h2: 'Activo en 24-48 horas',
@@ -254,6 +256,8 @@ export const t = {
     feat8_desc: 'Slack-style internal communication — by client, by department, with your agent as an active participant. The agent posts alerts, answers team questions, and takes instructions — all inside the platform.',
     feat9_title: 'Voice-Configured Commissions',
     feat9_desc: 'Your agent manages your team commissions. Just tell it in plain language: "change the rule to $200 per sale if they hit 10 this month" — done. No forms, no spreadsheets. Rules change when you decide.',
+    feat10_title: 'Your Agent Has Identity',
+    feat10_desc: 'Give it a name, a tone, and a way of speaking. "Hi, I\'m Sofia, assistant at Miami Insurance." — Not a generic bot. A real team member your clients will recognize and trust.',
     how_label: 'Process',
     how_h2: 'Live in 24-48 hours',
     how_s1t: 'Your dedicated number for your OAG',
