@@ -124,15 +124,61 @@ function AgentConfig({ lang }) {
     { from: 'user', msg: 'Sí, y agrega que las cancelaciones en los primeros 30 días descuentan la comisión' },
     { from: 'ai',  msg: '✅ Regla de cancelación agregada. Tus promotoras recibirán el reporte ajustado hoy a las 6pm.' },
   ] : [
-    { from: 'user', msg: 'Commissions are: 1-5 sales no bonus, 6-9 sales $100 per sale, 10-14 sales $150, 15+ sales $200' },
-    { from: 'ai',  msg: '✅ Got it. I have configured 4 commission tiers. Should I apply it retroactively to this month?' },
-    { from: 'user', msg: 'Yes, and add that cancellations within 30 days deduct the commission' },
+    { from: 'user', msg: 'Commissions are: 1-5 sales no bonus, 6-9 sales $100 per sale, 10-14 $150, 15+ $200' },
+    { from: 'ai',  msg: '✅ Got it. I configured 4 commission tiers. Apply retroactively to this month?' },
+    { from: 'user', msg: 'Yes, and cancellations within 30 days should deduct the commission' },
     { from: 'ai',  msg: '✅ Cancellation rule added. Your agents will receive the adjusted report today at 6pm.' },
+  ];
+
+  const tiers = lang === 'es' ? [
+    { plan: 'Starter', color: 'border-slate-700 bg-slate-800/40', badge: 'bg-slate-700 text-slate-300', items: [
+      { label: 'Ajustar horarios y bienvenida', ok: true },
+      { label: 'Configurar comisiones con el agente', ok: false },
+      { label: 'Definir rutas de mensajes hablando', ok: false },
+      { label: 'Reglas de escalación avanzadas', ok: false },
+      { label: 'Comandos ilimitados al agente', ok: false },
+    ]},
+    { plan: 'Growth', color: 'border-yellow-400/40 bg-yellow-400/5', badge: 'bg-yellow-400 text-slate-950', items: [
+      { label: 'Ajustar horarios y bienvenida', ok: true },
+      { label: 'Configurar comisiones con el agente', ok: true },
+      { label: 'Definir rutas de mensajes hablando', ok: true },
+      { label: 'Reglas de escalación avanzadas', ok: true },
+      { label: 'Comandos ilimitados al agente', ok: false },
+    ]},
+    { plan: 'Pro', color: 'border-emerald-400/30 bg-emerald-400/5', badge: 'bg-emerald-400 text-slate-950', items: [
+      { label: 'Ajustar horarios y bienvenida', ok: true },
+      { label: 'Configurar comisiones con el agente', ok: true },
+      { label: 'Definir rutas de mensajes hablando', ok: true },
+      { label: 'Reglas de escalación avanzadas', ok: true },
+      { label: 'Comandos ilimitados al agente', ok: true },
+    ]},
+  ] : [
+    { plan: 'Starter', color: 'border-slate-700 bg-slate-800/40', badge: 'bg-slate-700 text-slate-300', items: [
+      { label: 'Adjust hours and welcome message', ok: true },
+      { label: 'Configure commissions with agent', ok: false },
+      { label: 'Define message routing by talking', ok: false },
+      { label: 'Advanced escalation rules', ok: false },
+      { label: 'Unlimited agent commands', ok: false },
+    ]},
+    { plan: 'Growth', color: 'border-yellow-400/40 bg-yellow-400/5', badge: 'bg-yellow-400 text-slate-950', items: [
+      { label: 'Adjust hours and welcome message', ok: true },
+      { label: 'Configure commissions with agent', ok: true },
+      { label: 'Define message routing by talking', ok: true },
+      { label: 'Advanced escalation rules', ok: true },
+      { label: 'Unlimited agent commands', ok: false },
+    ]},
+    { plan: 'Pro', color: 'border-emerald-400/30 bg-emerald-400/5', badge: 'bg-emerald-400 text-slate-950', items: [
+      { label: 'Adjust hours and welcome message', ok: true },
+      { label: 'Configure commissions with agent', ok: true },
+      { label: 'Define message routing by talking', ok: true },
+      { label: 'Advanced escalation rules', ok: true },
+      { label: 'Unlimited agent commands', ok: true },
+    ]},
   ];
 
   return (
     <section className="bg-slate-950 py-24 px-6 border-t border-white/10">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl space-y-16">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="rounded-3xl border border-white/10 bg-slate-800/50 p-6 space-y-4 backdrop-blur-sm order-2 lg:order-1">
             <div className="flex items-center gap-3 pb-4 border-b border-white/10">
@@ -163,32 +209,43 @@ function AgentConfig({ lang }) {
             </h2>
             <p className="mt-6 text-lg text-slate-300 leading-relaxed">
               {lang === "es"
-                ? "No más formularios complejos ni manuales de configuración. Tu agente entiende lenguaje natural y convierte tus instrucciones en reglas del sistema — comisiones, rutas de mensajes, horarios, alertas. Todo en una conversación de WhatsApp."
-                : "No more complex forms or setup manuals. Your agent understands natural language and converts your instructions into system rules — commissions, message routing, schedules, alerts. All in a WhatsApp conversation."}
+                ? "No más formularios complejos. Tu agente entiende lenguaje natural y convierte tus instrucciones en reglas del sistema — comisiones, rutas, horarios, alertas."
+                : "No more complex forms. Your agent understands natural language and converts your instructions into system rules — commissions, routing, schedules, alerts."}
             </p>
-            <ul className="mt-8 space-y-4">
-              {(lang === "es" ? [
-                "Configura comisiones por tiers en lenguaje natural",
-                "Define rutas de mensajes y escalaciones hablando",
-                "Ajusta horarios, mensajes y reglas cuando quieras",
-                "El agente confirma cada cambio antes de aplicarlo",
-              ] : [
-                "Set up commission tiers in natural language",
-                "Define message routing and escalations by talking",
-                "Adjust schedules, messages, and rules anytime",
-                "The agent confirms every change before applying it",
-              ]).map(f => (
-                <li key={f} className="flex items-start gap-3 text-slate-300">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />{f}
-                </li>
-              ))}
-            </ul>
+            <p className="mt-4 text-sm text-slate-500">
+              {lang === "es" ? "Disponible según tu plan:" : "Available by plan:"}
+            </p>
           </div>
+        </div>
+
+        {/* Tier comparison */}
+        <div className="grid md:grid-cols-3 gap-5">
+          {tiers.map(tier => (
+            <div key={tier.plan} className={`rounded-3xl border ${tier.color} p-6`}>
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-white font-bold text-lg">{tier.plan}</h3>
+                <span className={`text-xs font-bold px-3 py-1 rounded-full ${tier.badge}`}>{tier.plan}</span>
+              </div>
+              <ul className="space-y-3">
+                {tier.items.map(item => (
+                  <li key={item.label} className="flex items-center gap-3 text-sm">
+                    {item.ok
+                      ? <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                      : <div className="h-4 w-4 rounded-full border border-slate-600 flex-shrink-0" />
+                    }
+                    <span className={item.ok ? 'text-slate-200' : 'text-slate-600'}>{item.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+
 
 function Features({ lang }) {
   const T = t[lang];
