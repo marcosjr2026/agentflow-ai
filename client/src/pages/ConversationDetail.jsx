@@ -5,7 +5,7 @@ import { Send, CheckCheck, Bot, User, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API = import.meta.env.VITE_API_URL || '/api';
 const token = () => localStorage.getItem('token');
 
 function MessageBubble({ msg }) {

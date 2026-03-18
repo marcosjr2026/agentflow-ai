@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BarChart3, Star, TrendingUp, Users } from 'lucide-react';
 import axios from 'axios';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API = import.meta.env.VITE_API_URL || '/api';
 const token = () => localStorage.getItem('token');
 const api = () => ({ headers: { Authorization: `Bearer ${token()}` } });
 
