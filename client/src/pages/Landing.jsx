@@ -289,6 +289,115 @@ function Features({ lang }) {
   );
 }
 
+function DashboardPreview({ lang }) {
+  const T = t[lang];
+  const agents = [
+    { name: 'Agente Ventas', status: 'activo', conversations: 142, conversions: 38, rate: '26.8%', color: 'bg-emerald-400' },
+    { name: 'Agente Soporte', status: 'activo', conversations: 89, conversions: 21, rate: '23.6%', color: 'bg-blue-400' },
+    { name: 'Agente Citas', status: 'activo', conversations: 64, conversions: 19, rate: '29.7%', color: 'bg-yellow-400' },
+    { name: 'Agente Re-engage', status: 'pausado', conversations: 31, conversions: 7, rate: '22.6%', color: 'bg-slate-400' },
+  ];
+  return (
+    <section className="bg-slate-900 py-24 px-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="text-center mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 mb-4">
+            {lang === 'es' ? 'PANEL DE CONTROL' : 'CONTROL PANEL'}
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
+            {lang === 'es' ? 'Así se ve por dentro' : 'See what\'s inside'}
+          </h2>
+          <p className="mt-4 text-xl text-slate-400 max-w-2xl mx-auto">
+            {lang === 'es'
+              ? 'Tu comando central. Todo en tiempo real, desde cualquier dispositivo.'
+              : 'Your command center. Everything in real time, from any device.'}
+          </p>
+        </div>
+
+        {/* Browser mockup frame */}
+        <div className="rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/50">
+          {/* Browser chrome */}
+          <div className="bg-slate-800 px-4 py-3 flex items-center gap-3 border-b border-white/10">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-500/70" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
+              <div className="w-3 h-3 rounded-full bg-green-500/70" />
+            </div>
+            <div className="flex-1 bg-slate-700/60 rounded-md px-3 py-1 text-xs text-slate-400 max-w-xs mx-auto text-center">
+              app.opnag.com/dashboard
+            </div>
+          </div>
+
+          {/* Dashboard content */}
+          <div className="bg-slate-950 flex">
+            {/* Sidebar */}
+            <div className="hidden md:flex flex-col w-56 border-r border-white/10 p-4 gap-1">
+              <div className="flex items-center gap-2 px-3 py-2 mb-4">
+                <div className="h-7 w-7 bg-yellow-400 rounded-lg flex items-center justify-center">
+                  <Bot className="h-4 w-4 text-slate-950" />
+                </div>
+                <span className="text-sm font-bold text-white">Open AG</span>
+              </div>
+              {[
+                { icon: BarChart3, label: lang === 'es' ? 'Dashboard' : 'Dashboard', active: true },
+                { icon: Bot, label: lang === 'es' ? 'Mis Agentes' : 'My Agents', active: false },
+                { icon: MessageSquare, label: lang === 'es' ? 'Conversaciones' : 'Conversations', active: false },
+                { icon: TrendingUp, label: lang === 'es' ? 'Reportes' : 'Reports', active: false },
+                { icon: Users, label: lang === 'es' ? 'Contactos' : 'Contacts', active: false },
+              ].map(item => (
+                <div key={item.label} className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-colors ${item.active ? 'bg-yellow-400/10 text-yellow-400 font-medium' : 'text-slate-400'}`}>
+                  <item.icon className="h-4 w-4" />
+                  {item.label}
+                </div>
+              ))}
+            </div>
+
+            {/* Main content */}
+            <div className="flex-1 p-6 overflow-hidden">
+              {/* Stats row */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                {[
+                  { label: lang === 'es' ? 'Conversaciones hoy' : 'Conversations today', value: '326', delta: '+12%', color: 'text-emerald-400' },
+                  { label: lang === 'es' ? 'Conversiones' : 'Conversions', value: '85', delta: '+8%', color: 'text-emerald-400' },
+                  { label: lang === 'es' ? 'Tasa de cierre' : 'Close rate', value: '26.1%', delta: '+3.4%', color: 'text-emerald-400' },
+                  { label: lang === 'es' ? 'Agentes activos' : 'Active agents', value: '3/4', delta: '', color: 'text-yellow-400' },
+                ].map(stat => (
+                  <div key={stat.label} className="bg-white/5 rounded-2xl p-4 border border-white/10">
+                    <p className="text-xs text-slate-400 mb-1">{stat.label}</p>
+                    <p className="text-2xl font-bold text-white">{stat.value}</p>
+                    {stat.delta && <p className={`text-xs font-medium mt-1 ${stat.color}`}>{stat.delta}</p>}
+                  </div>
+                ))}
+              </div>
+
+              {/* Agents table */}
+              <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white">{lang === 'es' ? 'Tus Agentes' : 'Your Agents'}</p>
+                  <span className="text-xs bg-yellow-400/10 text-yellow-400 px-2 py-1 rounded-lg font-medium">Live</span>
+                </div>
+                <div className="divide-y divide-white/5">
+                  {agents.map(agent => (
+                    <div key={agent.name} className="flex items-center gap-4 px-4 py-3">
+                      <div className={`w-2 h-2 rounded-full ${agent.color} flex-shrink-0`} />
+                      <p className="text-sm text-white font-medium flex-1 min-w-0 truncate">{agent.name}</p>
+                      <span className={`text-xs px-2 py-0.5 rounded-full hidden sm:inline ${agent.status === 'activo' || agent.status === 'active' ? 'bg-emerald-400/10 text-emerald-400' : 'bg-slate-400/10 text-slate-400'}`}>
+                        {agent.status}
+                      </span>
+                      <p className="text-xs text-slate-400 hidden md:block w-20 text-right">{agent.conversations} conv.</p>
+                      <p className="text-xs font-semibold text-yellow-400 w-14 text-right">{agent.rate}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HowItWorks({ lang }) {
   const T = t[lang];
   const steps = [
@@ -430,6 +539,7 @@ export default function Landing() {
       <AgentHighlight lang={lang} />
       <AgentConfig lang={lang} />
       <Features lang={lang} />
+      <DashboardPreview lang={lang} />
       <HowItWorks lang={lang} />
       <Comparison lang={lang} />
       <Pricing lang={lang} />
