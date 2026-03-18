@@ -13,7 +13,11 @@ npm run build
 cd ..
 
 echo "→ Pushing DB schema..."
-npx drizzle-kit push --config=drizzle.config.js || echo "DB push warning (continuing)"
+npx drizzle-kit push --config=drizzle.config.js 2>&1 | tail -5 || echo "DB push warning"
 
-echo "→ Starting server..."
-PORT=5000 node server/index.js
+echo "→ Starting server on port 5000..."
+# Kill anything on port 5000 first
+fuser -k 5000/tcp 2>/dev/null || true
+sleep 1
+
+exec node server/index.js
