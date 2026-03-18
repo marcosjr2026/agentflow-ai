@@ -11,7 +11,6 @@ expertMode = true
 [deployment]
 run = ["bash", "start.sh"]
 deploymentTarget = "cloudrun"
-build = ["bash", "-c", "cd client && npm install && npm run build"]
 
 [workflows]
 runButton = "Project"
@@ -20,6 +19,10 @@ runButton = "Project"
 name = "Project"
 mode = "sequential"
 author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "fuser -k 5000/tcp 2>/dev/null; true"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
