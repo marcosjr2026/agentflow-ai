@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bot, MessageSquare, Phone, BarChart3, Zap, Users, CheckCircle2, ArrowRight, Globe, Brain, TrendingUp, ChevronDown } from 'lucide-react';
+import { Bot, MessageSquare, Phone, BarChart3, Zap, Users, CheckCircle2, ArrowRight, Globe, Brain, TrendingUp, ChevronDown, Mail } from 'lucide-react';
 import { t, setLang } from '../lib/i18n';
 
 function NavBar({ lang, onLang }) {
@@ -51,7 +51,14 @@ function Hero({ lang }) {
             {T.hero_cta2}<ChevronDown className="h-5 w-5" />
           </a>
         </div>
-        <div className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
+          {(lang==='es'?['WhatsApp Real','Email dedicado','Dashboard 24/7']:['Real WhatsApp','Dedicated Email','24/7 Dashboard']).map(b => (
+            <span key={b} className="inline-flex items-center gap-2 border border-white/10 bg-white/5 text-slate-300 text-xs font-medium px-4 py-2 rounded-full">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />{b}
+            </span>
+          ))}
+        </div>
+        <div className="mt-8 grid grid-cols-3 gap-8 max-w-lg mx-auto">
           {[['90+', T.hero_stat1],['97%', T.hero_stat2],['24/7', T.hero_stat3]].map(([v,l]) => (
             <div key={l} className="text-center">
               <p className="text-3xl font-bold text-yellow-400">{v}</p>
@@ -256,6 +263,7 @@ function Features({ lang }) {
     { icon: BarChart3, color: 'bg-yellow-500/10 text-yellow-400', title: T.feat4_title, desc: T.feat4_desc },
     { icon: TrendingUp, color: 'bg-rose-500/10 text-rose-400', title: T.feat5_title, desc: T.feat5_desc },
     { icon: Users, color: 'bg-violet-500/10 text-violet-400', title: T.feat6_title, desc: T.feat6_desc },
+    { icon: Mail, color: 'bg-cyan-500/10 text-cyan-400', title: T.feat7_title, desc: T.feat7_desc },
   ];
   return (
     <section id="features" className="bg-slate-950 py-24 px-6">
