@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bot, MessageSquare, Phone, BarChart3, Zap, Users, CheckCircle2, ArrowRight, Globe, Brain, TrendingUp, ChevronDown, Mail } from 'lucide-react';
+import { Bot, MessageSquare, Phone, BarChart3, Zap, Users, CheckCircle2, ArrowRight, Globe, Brain, TrendingUp, ChevronDown, Mail, Hash } from 'lucide-react';
 import { t, setLang } from '../lib/i18n';
 
 function NavBar({ lang, onLang }) {
@@ -264,6 +264,7 @@ function Features({ lang }) {
     { icon: TrendingUp, color: 'bg-rose-500/10 text-rose-400', title: T.feat5_title, desc: T.feat5_desc },
     { icon: Users, color: 'bg-violet-500/10 text-violet-400', title: T.feat6_title, desc: T.feat6_desc },
     { icon: Mail, color: 'bg-cyan-500/10 text-cyan-400', title: T.feat7_title, desc: T.feat7_desc },
+    { icon: Hash, color: 'bg-pink-500/10 text-pink-400', title: T.feat8_title, desc: T.feat8_desc },
   ];
   return (
     <section id="features" className="bg-slate-950 py-24 px-6">

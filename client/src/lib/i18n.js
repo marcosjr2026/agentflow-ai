@@ -44,6 +44,8 @@ export const t = {
     feat7_desc: 'Cada agencia recibe su propio email @opnag.com incluido en todos los planes. El agente recibe documentos, responde y envía pólizas por email — unificado con WhatsApp en un solo dashboard.',
     feat6_title: 'Secuencias de Educación',
     feat6_desc: 'Mensajes automáticos de onboarding, beneficios y renovación. El agente los envía en el momento correcto.',
+    feat8_title: 'Chat Interno del Equipo',
+    feat8_desc: 'Canal de comunicación interno estilo Slack — por cliente, por departamento, y con tu agente participando. El agente postea alertas, responde preguntas del equipo y recibe instrucciones, todo dentro de la plataforma.',
     // How
     how_label: 'Proceso',
     how_h2: 'Activo en 24-48 horas',
@@ -233,6 +235,8 @@ export const t = {
     feat7_desc: 'Every agency gets a dedicated @opnag.com email included in all plans. The agent receives documents, responds, and sends policies by email — unified with WhatsApp in one dashboard.',
     feat6_title: 'Education Sequences',
     feat6_desc: 'Automatic onboarding, benefits, and renewal messages. The agent sends them at the right moment.',
+    feat8_title: 'Internal Team Chat',
+    feat8_desc: 'Slack-style internal communication — by client, by department, with your agent as an active participant. The agent posts alerts, answers team questions, and takes instructions — all inside the platform.',
     how_label: 'Process',
     how_h2: 'Live in 24-48 hours',
     how_s1t: 'Open AG acquires your number',
