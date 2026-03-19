@@ -8,6 +8,7 @@ import { authRouter } from './routes/auth.js';
 import { onboardingRouter } from './routes/onboarding.js';
 import { adminRouter } from './routes/admin.js';
 import { stripeRouter } from './routes/stripe.js';
+import { oagRouter } from './routes/oag.js';
 import { conversationsRouter } from './routes/conversations.js';
 import { contactsRouter } from './routes/contacts.js';
 import { callsRouter } from './routes/calls.js';
@@ -45,6 +46,7 @@ app.use('/api/contacts', authMiddleware, contactsRouter);
 app.use('/api/calls', authMiddleware, callsRouter);
 app.use('/api/payments', authMiddleware, paymentsRouter);
 app.use('/api/analytics', authMiddleware, analyticsRouter);
+app.use('/api/oag', authMiddleware, oagRouter);
 
 // ─── HEALTH CHECK ─────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
