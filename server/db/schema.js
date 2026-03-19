@@ -15,6 +15,11 @@ export const agencies = pgTable('agencies', {
   metadata:            jsonb('metadata'),
   onboardingCompleted: boolean('onboarding_completed').default(false),
   stripeCustomerId:    varchar('stripe_customer_id', { length: 100 }),
+  // ─── Breach Protocol (OAG Soul v1.1 §3.9) ───────────────────────────────
+  apiKeyHash:          varchar('api_key_hash', { length: 255 }),
+  apiKeyLastRotated:   timestamp('api_key_last_rotated'),
+  allowedIps:          jsonb('allowed_ips'),                    // string[]
+  breachContactEmail:  varchar('breach_contact_email', { length: 255 }),
   createdAt:           timestamp('created_at').defaultNow(),
 });
 
@@ -46,7 +51,16 @@ export const contacts = pgTable('contacts', {
   paymentAmount:     decimal('payment_amount', { precision: 10, scale: 2 }),
   effectiveDate:     date('effective_date'),
   metadata:          jsonb('metadata'), // datos adicionales del plan
-  createdAt:         timestamp('created_at').defaultNow(),
+  // ─── TCPA Compliance (OAG Soul v1.1 §3.7) ───────────────────────────────
+  tcpaConsent:        boolean('tcpa_consent').default(false),
+  tcpaConsentDate:    timestamp('tcpa_consent_date'),
+  tcpaConsentMethod:  varchar('tcpa_consent_method', { length: 50 }), // 'written_form' | 'digital_form' | 'verbal_recorded'
+  tcpaOptOutDate:     timestamp('tcpa_opt_out_date'),
+  // ─── Data Retention (OAG Soul v1.1 §3.8) ────────────────────────────────
+  dataRetentionUntil: date('data_retention_until'),             // última actividad + 7 años
+  anonymized:         boolean('anonymized').default(false),
+  anonymizedDate:     timestamp('anonymized_date'),
+  createdAt:          timestamp('created_at').defaultNow(),
 });
 
 // ─── CONVERSACIONES ───────────────────────────────────────────────────────────
