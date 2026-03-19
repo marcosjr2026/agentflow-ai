@@ -8,7 +8,7 @@ import OpenAI from 'openai';
 import { db } from '../db/index.js';
 import { contacts, conversations, messages, users, agencies } from '../db/schema.js';
 import { eq, and, desc } from 'drizzle-orm';
-import { sendTextMessage } from './whatsapp.js';
+import { sendMessage as baileySend } from './baileys.js';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -103,7 +103,7 @@ function buildSystemPrompt(agency, oagConfig, clientContext, recentMessages) {
 }
 
 // ─── PROCESAR MENSAJE ENTRANTE ────────────────────────────────────────────────
-export async function processInboundMessage({ agencyId, from, messageText, waMessageId }) {
+export async function processInboundMessage({ agencyId, from, messageText, waMessageId, ...options }) {
   try {
     // 1. Cargar agencia
     const [agency] = await db.select().from(agencies)
@@ -225,9 +225,20 @@ export async function processInboundMessage({ agencyId, from, messageText, waMes
       // TODO: notificar al manager por push/email
     }
 
-    // 11. Enviar respuesta por WhatsApp
-    if (responseText && agency.whatsappApiKey) {
-      await sendTextMessage(from, responseText, agency.whatsappApiKey);
+    // 11. Enviar respuesta por Baileys (o socket pasado directamente)
+    if (responseText) {
+      try {
+        if (options?._baileysSocket) {
+          // Llamada desde webhook Baileys — usar socket directo
+          const jid = from.replace('+', '') + '@s.whatsapp.net';
+          await options._baileysSocket.sendMessage(jid, { text: responseText });
+        } else {
+          // Llamada desde API — usar sesión activa de la agencia
+          await baileySend(agencyId, from, responseText);
+        }
+      } catch (sendErr) {
+        console.error('Error enviando mensaje Baileys:', sendErr.message);
+      }
     }
 
     // 12. Update timestamp de conversación

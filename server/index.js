@@ -9,6 +9,7 @@ import { onboardingRouter } from './routes/onboarding.js';
 import { adminRouter } from './routes/admin.js';
 import { stripeRouter } from './routes/stripe.js';
 import { oagRouter } from './routes/oag.js';
+import { restoreAllSessions } from './services/baileys.js';
 import { conversationsRouter } from './routes/conversations.js';
 import { contactsRouter } from './routes/contacts.js';
 import { callsRouter } from './routes/calls.js';
@@ -75,6 +76,7 @@ app.listen(PORT, async () => {
   console.log(`🚀 AgentFlow AI server corriendo en puerto ${PORT}`);
   await seedAdmin();
   initCronJobs();
+  restoreAllSessions().catch(err => console.error('Error restaurando sesiones Baileys:', err));
 });
 
 export default app;

@@ -7,6 +7,7 @@
 
 import { Router } from 'express';
 import { processInboundMessage } from '../services/oag-engine.js';
+import { createSession, getSessionStatus, disconnectSession } from '../services/baileys.js';
 import { db } from '../db/index.js';
 import { agencies } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
@@ -52,6 +53,59 @@ oagRouter.get('/config', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// GET /api/oag/whatsapp/status — estado de la sesión Baileys
+oagRouter.get('/whatsapp/status', async (req, res) => {
+  const { agencyId } = req.user;
+  res.json(getSessionStatus(agencyId));
+});
+
+// POST /api/oag/whatsapp/connect — iniciar conexión y devolver QR
+oagRouter.post('/whatsapp/connect', async (req, res) => {
+  const { agencyId } = req.user;
+
+  // Responder cuando haya QR o cuando ya esté conectado
+  let responded = false;
+
+  const timeout = setTimeout(() => {
+    if (!responded) {
+      responded = true;
+      res.status(408).json({ error: 'Timeout esperando QR. Intenta de nuevo.' });
+    }
+  }, 30000);
+
+  await createSession(
+    agencyId,
+    (qrDataUrl) => {
+      if (!responded) {
+        responded = true;
+        clearTimeout(timeout);
+        res.json({ status: 'qr_ready', qr: qrDataUrl });
+      }
+    },
+    (phone) => {
+      if (!responded) {
+        responded = true;
+        clearTimeout(timeout);
+        res.json({ status: 'connected', phone });
+      }
+    },
+    (reason) => {
+      if (!responded) {
+        responded = true;
+        clearTimeout(timeout);
+        res.status(500).json({ status: 'disconnected', reason });
+      }
+    }
+  );
+});
+
+// DELETE /api/oag/whatsapp/disconnect — cerrar sesión
+oagRouter.delete('/whatsapp/disconnect', async (req, res) => {
+  const { agencyId } = req.user;
+  await disconnectSession(agencyId);
+  res.json({ success: true });
 });
 
 // PUT /api/oag/config — actualizar config Capa 2
