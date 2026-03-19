@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import { authRouter } from './routes/auth.js';
 import { onboardingRouter } from './routes/onboarding.js';
 import { adminRouter } from './routes/admin.js';
+import { stripeRouter } from './routes/stripe.js';
 import { conversationsRouter } from './routes/conversations.js';
 import { contactsRouter } from './routes/contacts.js';
 import { callsRouter } from './routes/calls.js';
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ─── RUTAS PÚBLICAS ───────────────────────────────────────────────────────────
 app.use('/api/auth', authRouter);
+app.use('/api/stripe', stripeRouter);     // Stripe checkout + webhook (público)
 app.use('/api/webhooks', webhooksRouter); // Webhook de WhatsApp no requiere JWT
 
 // ─── RUTAS PROTEGIDAS ─────────────────────────────────────────────────────────

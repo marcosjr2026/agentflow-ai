@@ -14,6 +14,7 @@ export const agencies = pgTable('agencies', {
   status:              varchar('status', { length: 20 }).default('active'),
   metadata:            jsonb('metadata'),
   onboardingCompleted: boolean('onboarding_completed').default(false),
+  stripeCustomerId:    varchar('stripe_customer_id', { length: 100 }),
   createdAt:           timestamp('created_at').defaultNow(),
 });
 

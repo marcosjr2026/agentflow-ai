@@ -805,7 +805,7 @@ function Pricing({ lang }) {
                   </li>
                 ))}
               </ul>
-              <a href="/login" className={`mt-8 block text-center font-semibold py-3.5 rounded-2xl transition-all ${p.badge ? 'bg-yellow-400 hover:bg-yellow-300 text-slate-950' : 'border border-white/20 hover:border-white/40 text-white'}`}>{T.price_cta}</a>
+              <a href={`/login?plan=${p.name.toLowerCase()}`} className={`mt-8 block text-center font-semibold py-3.5 rounded-2xl transition-all ${p.badge ? 'bg-yellow-400 hover:bg-yellow-300 text-slate-950' : 'border border-white/20 hover:border-white/40 text-white'}`}>{T.price_cta}</a>
             </div>
           ))}
         </div>
