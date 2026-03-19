@@ -73,7 +73,7 @@ export default function ConversationDetail() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [data?.messages]);
 
-  const contact = data?.contact;
+  const contact = data?.contact || data?.conversation?.contact;
 
   return (
     <div className="flex h-full">
