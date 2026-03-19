@@ -17,7 +17,7 @@ import { processInboundMessage } from './oag-engine.js';
 // agencyId → { socket, status, qr, phone }
 const sessions = new Map();
 
-const SESSIONS_DIR = process.env.BAILEYS_SESSIONS_DIR || '/tmp/baileys-sessions';
+const SESSIONS_DIR = process.env.BAILEYS_SESSIONS_DIR || './baileys-sessions';
 
 function getSessionPath(agencyId) {
   return path.join(SESSIONS_DIR, agencyId);
