@@ -28,6 +28,25 @@ export default function WhatsApp() {
 
   useEffect(() => { fetchStatus(); }, [fetchStatus]);
 
+  // Polling cuando está en qr_ready — detectar cuando el usuario escaneó
+  useEffect(() => {
+    if (status !== 'qr_ready') return;
+    const interval = setInterval(async () => {
+      try {
+        const { data } = await axios.get(`${API}/oag/whatsapp/status`, {
+          headers: { Authorization: `Bearer ${token()}` },
+        });
+        if (data.status === 'open' || data.status === 'connected') {
+          setStatus('connected');
+          setPhone(data.phone);
+          setQr(null);
+          clearInterval(interval);
+        }
+      } catch {}
+    }, 3000); // check cada 3 segundos
+    return () => clearInterval(interval);
+  }, [status]);
+
   // Conectar — solicitar QR
   const handleConnect = async () => {
     setLoading(true);

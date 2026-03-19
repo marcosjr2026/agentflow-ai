@@ -157,7 +157,7 @@ export function getSessionStatus(agencyId) {
   const session = sessions.get(agencyId);
   if (!session) return { status: 'disconnected', qr: null, phone: null };
   return {
-    status: session.status,
+    status: session.status === 'open' ? 'connected' : session.status,
     qr: session.qr,
     phone: session.phone,
   };
