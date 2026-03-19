@@ -12,6 +12,7 @@ import Contacts from './pages/Contacts';
 import Calls from './pages/Calls';
 import Payments from './pages/Payments';
 import Analytics from './pages/Analytics';
+import WhatsApp from './pages/WhatsApp';
 import Layout from './components/Layout';
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="calls" element={<Calls />} />
             <Route path="payments" element={<Payments />} />
             <Route path="analytics" element={<Analytics />} />
+            <Route path="whatsapp" element={<WhatsApp />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>
 

@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, MessageSquare, Users, Phone,
+  LayoutDashboard, MessageSquare, Users, Phone, Smartphone,
   CreditCard, BarChart3, LogOut, Bot, ChevronRight, ShieldCheck, Settings
 } from 'lucide-react';
 
@@ -9,6 +9,7 @@ const navItems = [
   { to: '/app/conversations', label: 'Conversaciones', icon: MessageSquare },
   { to: '/app/contacts',      label: 'Contactos',      icon: Users },
   { to: '/app/calls',         label: 'Llamadas AI',    icon: Phone },
+  { to: '/app/whatsapp',     label: 'WhatsApp',       icon: Smartphone },
   { to: '/app/payments',      label: 'Pagos',          icon: CreditCard },
   { to: '/app/analytics',     label: 'Analytics',      icon: BarChart3 },
   { to: '/app/settings',      label: 'Configuración',  icon: Settings },
